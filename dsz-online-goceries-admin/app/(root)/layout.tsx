@@ -12,7 +12,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full bg-zinc-100">
       <Navbar />
-      {children}
+      <main className="w-1/2 mx-auto p-4">{children}</main>
     </div>
   );
 };
