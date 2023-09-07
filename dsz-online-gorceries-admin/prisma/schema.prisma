@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+
+model Category{
+  id String @id @default(uuid())
+  name String
+  products Product[]
+}
+
+model Product{
+  id String @id @default(uuid())
+  name String
+  price Decimal
+  image String
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId])
+}
