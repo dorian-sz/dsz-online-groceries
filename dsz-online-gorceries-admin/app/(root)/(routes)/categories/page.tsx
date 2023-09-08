@@ -1,9 +1,16 @@
 import Link from "next/link";
+import axios from "axios";
 
 import Heading from "@/components/heading";
 import { Button } from "@/components/ui/button";
+import { Category } from "@prisma/client";
+import { DataTable } from "./components/data-table";
+import { Columns } from "./components/columns";
+import prismadb from "@/lib/prismadb";
 
-const CategoriesPage = () => {
+const CategoriesPage = async () => {
+  const data = await prismadb.category.findMany();
+
   return (
     <div className="flex flex-col gap-y-8">
       <Heading
@@ -11,6 +18,7 @@ const CategoriesPage = () => {
         title="Manage Categories"
         href="/categories/new"
       />
+      <DataTable columns={Columns} data={data} />
     </div>
   );
 };
