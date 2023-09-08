@@ -39,10 +39,11 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    axios.post("/api/categories", values).then((response) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    await axios.post("/api/categories", values).then((response) => {
       console.log(response.status, response.data);
     });
+    router.refresh();
     router.push("/categories");
   };
 
