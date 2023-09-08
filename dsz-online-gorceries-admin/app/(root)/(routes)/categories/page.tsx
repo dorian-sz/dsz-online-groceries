@@ -1,9 +1,4 @@
-import Link from "next/link";
-import axios from "axios";
-
 import Heading from "@/components/heading";
-import { Button } from "@/components/ui/button";
-import { Category } from "@prisma/client";
 import { DataTable } from "./components/data-table";
 import { Columns } from "./components/columns";
 import prismadb from "@/lib/prismadb";
