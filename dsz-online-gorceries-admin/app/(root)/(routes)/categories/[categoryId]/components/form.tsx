@@ -11,6 +11,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -38,11 +39,16 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
       name: initialData?.name,
     },
   });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await axios.post("/api/categories", values).then((response) => {
-      console.log(response.status, response.data);
-    });
+    initialData
+      ? await axios
+          .patch(`/api/categories/${initialData?.id}`, values)
+          .then((response) => {
+            console.log(response.status, response.data);
+          })
+      : await axios.post(`/api/categories`, values).then((response) => {
+          console.log(response.status, response.data);
+        });
     router.refresh();
     router.push("/categories");
   };
@@ -61,6 +67,9 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Category name
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Category name" {...field} />
                   </FormControl>
