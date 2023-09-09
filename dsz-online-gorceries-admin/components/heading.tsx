@@ -12,14 +12,14 @@ const Heading: React.FC<HeadingProps> = ({ label, title, href }) => {
   return (
     <>
       <div className="flex w-full justify-start">
-        <Button>
+        <Button className="md:absolute">
           <Link href={href}>{label}</Link>
         </Button>
+        <div className="mx-auto">
+          <p className="font-bold text-2xl text-stone-600">{title}</p>
+        </div>
       </div>
       <Separator />
-      <div className="flex w-full justify-center">
-        <p className="font-bold text-2xl text-stone-600">{title}</p>
-      </div>
     </>
   );
 };
