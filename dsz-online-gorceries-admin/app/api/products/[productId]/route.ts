@@ -3,7 +3,10 @@ import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
-export async function DELETE(request: Request, params: { productId: string }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { productId: string } }
+) {
   try {
     const { userId } = auth();
 
