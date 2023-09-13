@@ -1,10 +1,16 @@
 "use client";
 
-import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Actions from "./actions";
 
-export const Columns: ColumnDef<Product>[] = [
+export type ProductColumn = {
+  id: string;
+  name: string;
+  price: string;
+  category: string;
+};
+
+export const Columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "name",
     header: "Product Name",
@@ -14,7 +20,7 @@ export const Columns: ColumnDef<Product>[] = [
     header: "Price",
   },
   {
-    accessorKey: "category.name",
+    accessorKey: "category",
     header: "Category",
   },
   {
