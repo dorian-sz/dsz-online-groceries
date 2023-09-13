@@ -35,9 +35,11 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: initialData?.name,
-    },
+    defaultValues: initialData
+      ? initialData
+      : {
+          name: "",
+        },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     initialData
