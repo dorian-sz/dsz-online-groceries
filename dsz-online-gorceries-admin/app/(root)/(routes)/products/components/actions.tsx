@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Category, Product } from "@prisma/client";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ProductColumn } from "./columns";
 
 interface ActionsProps {
-  product: Product;
+  product: ProductColumn;
 }
 
 const Actions: React.FC<ActionsProps> = ({ product }) => {
