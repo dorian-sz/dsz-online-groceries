@@ -8,10 +8,13 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Cart from "@/components/cart";
-import Logo from "./logo";
+import Logo from "@/components/logo";
+import { Input } from "@/components/ui/input";
+import { Label } from "./ui/label";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { userId } = useAuth();
   const pathName = usePathname();
   const navLinks = [
     {
@@ -30,122 +33,137 @@ const Navbar = () => {
       href: "/under-development",
     },
   ];
-
+  const login = [
+    {
+      ukey: "login",
+      label: "Log in / Register",
+      href: "/sign-in",
+    },
+  ];
   const navItems = useMemo(
     () => [
       {
         label: "Groceries",
         href: "/",
         active: pathName === "/",
+        disabled: true,
       },
       {
         label: "Favourites",
         href: "/under-development",
+        disabled: true,
       },
       {
         label: "Nectar",
         href: "/under-development",
+        disabled: true,
       },
       {
         label: "Offers",
         href: "/offers",
         active: pathName === "/offers",
+        disabled: false,
       },
       {
         label: "Discover",
         href: "/under-development",
+        disabled: true,
       },
       {
         label: "Recipes",
         href: "/under-development",
+        disabled: true,
       },
       {
         label: "Delivery Pass",
         href: "/under-development",
+        disabled: true,
       },
       {
         label: "Occasions",
         href: "/under-development",
+        disabled: true,
       },
       {
         label: "Summer",
         href: "/under-development",
+        disabled: true,
       },
     ],
     [pathName]
   );
   return (
-    <div className="flex flex-col mx-auto p-2 w-full md:pt-2 md:w-3/5 md:gap-y-4">
-      <div className="flex justify-between md:hidden">
-        <div className="flex">
-          <Button variant={"ghost"} size={"icon"}>
-            <Menu />
-          </Button>
-          <div className="flex items-center">
-            <Logo width={110} height={45} />
-          </div>
-        </div>
-        <Cart />
-      </div>
-      <div className="flex ml-auto md:ml-0">
-        <div className="hidden md:flex items-center w-full">
-          <div className="hidden gap-x-6 md:flex ">
+    <div className="flex flex-col mx-auto h-full w-full md:pt-2 md:w-3/4 md:gap-y-4">
+      <div className="hidden gap-x-6 items-center md:w-full md:flex md: ">
+        <div className="flex w-full justify-between">
+          <div className="space-x-4 text-xs font-semibold">
             {navLinks.map((link) => (
-              <Link key={link.ukey} href={link.href}>
-                <p className="text-xs hover:underline">{link.label}</p>
+              <Link
+                key={link.ukey}
+                href={link.href}
+                className="underline-offset-4 hover:underline"
+              >
+                {link.label}
               </Link>
             ))}
           </div>
-          <div className="ml-auto">
-            {!userId ? (
-              <div className="mr-4">
-                <Link href={"/sign-in"}>
-                  <p className="text-sm font-bold hover:underline">
-                    Log in / Register
-                  </p>
-                </Link>
-              </div>
-            ) : (
-              <div className="mr-8">
-                <SignOutButton>
-                  <p className="text-sm cursor-pointer hover:underline">
-                    Logout
-                  </p>
-                </SignOutButton>
-              </div>
-            )}
-          </div>
+          {login.map((link) => (
+            <Link
+              key={link.ukey}
+              href={link.href}
+              className="text-sm font-extrabold underline-offset-4 hover:underline"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
-        <div className="hidden justify-center items-center md:flex">
+        <div className="flex gap-x-4">
           <Cart />
         </div>
       </div>
-      <div className="hidden justify-between items-center md:flex">
-        <Logo width={140} height={100} />
-        <Link href={"/under-development"}>
-          <p className="text-xs underline">Search a list of items</p>
-        </Link>
+      <div className="flex items-center">
+        <Logo width={150} height={100} />
       </div>
-      <div className="flex w-full items-center">
-        <input
-          className="border border-neutral-700 border-r-0 w-full p-2 focus:border-orange-600"
-          type="search"
+      <div className="hidden w-full md:flex md:relative items-center">
+        <Input
+          id="search-bar"
+          name="search-bar"
+          className="border placeholder:text-gray-400 py-6"
           placeholder="Search products"
         />
-        <Button>
-          <Search />
-        </Button>
-      </div>
-      <div className="hidden gap-x-6 md:flex">
-        {navItems.map((items) => (
-          <div
-            key={items.label}
-            className={`h-full border-b-4 ${
-              items.active ? "border-orange-600" : "border-transparent"
-            } hover:border-orange-600`}
+        <Label
+          htmlFor="search-bar"
+          className="absolute flex items-center right-0 gap-x-2"
+        >
+          <Link
+            href={"/search-a-list-of-items"}
+            className="text-gray-500 font-light underline-offset-2 hover:underline"
           >
-            <Link href={items.href}>
-              <p className="">{items.label}</p>
+            Search a list of items
+          </Link>
+          <Button
+            variant={"ghost"}
+            type="submit"
+            className="hover:bg-transparent"
+          >
+            <Search />
+          </Button>
+        </Label>
+      </div>
+      <div className="flex gap-x-8 h-full">
+        {navItems.map((item) => (
+          <div
+            className={cn(
+              "border-b-4 hover:border-orange-500 self-end",
+              item.active ? "border-orange-500" : "border-transparent"
+            )}
+          >
+            <Link
+              key={item.label}
+              href={item.href}
+              className={item.disabled ? `pointer-events-none` : ``}
+            >
+              {item.label}
             </Link>
           </div>
         ))}

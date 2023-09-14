@@ -14,7 +14,7 @@ const Cart = () => {
   }
 
   return (
-    <Button variant={"ghost"} className="gap-x-2">
+    <Button className="gap-x-2 px-4">
       <ShoppingCart />
       <span className="font-bold text-sm">£0.00</span>
     </Button>
