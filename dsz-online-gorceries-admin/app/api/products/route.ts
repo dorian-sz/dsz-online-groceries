@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   try {
     const { userId } = auth();
     const body = await request.json();
-    const { name, price, image, categoryId } = body;
+    const { name, price, image, categoryId, subcategoryId } = body;
 
     if (!userId) new NextResponse("Unauthorized", { status: 401 });
     if (!name || !price || !image || categoryId)
@@ -33,6 +33,7 @@ export async function POST(request: Request) {
         price,
         image,
         categoryId,
+        subcategoryId,
       },
     });
     return NextResponse.json(product);
