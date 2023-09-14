@@ -35,7 +35,6 @@ export async function POST(request: Request) {
         categoryId,
       },
     });
-    console.log(product);
     return NextResponse.json(product);
   } catch (error) {
     return new NextResponse(`Error: ${error}`, { status: 500 });
