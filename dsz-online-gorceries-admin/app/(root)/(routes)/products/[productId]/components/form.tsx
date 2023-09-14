@@ -17,31 +17,28 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Category, Product } from "@prisma/client";
+import { Category, Product, Subcategory } from "@prisma/client";
 import { useForm } from "react-hook-form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
-import { SelectTrigger } from "@radix-ui/react-select";
+import FormSelect from "./form-select";
 
 const formSchema = z.object({
   name: z.string().min(1),
   price: z.coerce.number(),
   categoryId: z.string(),
+  subcategoryId: z.string(),
   image: z.string().min(1),
 });
 
 interface ProductFormProps {
   initialData: Product | null;
   categories: Category[];
+  subcategories: Subcategory[];
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
+  subcategories,
 }) => {
   const router = useRouter();
   const title = initialData === null ? "Add Product" : "Update Product";
@@ -56,6 +53,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           name: "",
           price: 0,
           categoryId: "Select a category",
+          subcategoryId: "Select a category",
           image: "",
         },
   });
@@ -115,26 +113,22 @@ const ProductForm: React.FC<ProductFormProps> = ({
               control={form.control}
               name="categoryId"
               render={({ field }) => (
-                <FormItem>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="p-2 border bg-white rounded-sm hover:bg-accent hover:text-accent-foreground">
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
+                <FormSelect
+                  field={field}
+                  selectArr={categories}
+                  label="Select Category"
+                />
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="subcategoryId"
+              render={({ field }) => (
+                <FormSelect
+                  field={field}
+                  selectArr={subcategories}
+                  label="Select Subcategory"
+                />
               )}
             />
             <FormField
