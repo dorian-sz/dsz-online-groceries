@@ -1,17 +1,14 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 import { Subcategory } from "@prisma/client";
 
 export async function POST(request: Request) {
   try {
-    const { userId } = auth();
     const body = await request.json();
 
     const { name } = body;
 
-    if (!userId) new NextResponse("Unathorized", { status: 401 });
     if (!name) new NextResponse("Subcategory name required!", { status: 400 });
 
     const subcategory = await prismadb.subcategory.create({
@@ -29,10 +26,6 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const { userId } = auth();
-
-    if (!userId) new NextResponse("Unauthorized", { status: 401 });
-
     const subcategories: Subcategory[] = await prismadb.subcategory.findMany();
 
     return NextResponse.json(subcategories);

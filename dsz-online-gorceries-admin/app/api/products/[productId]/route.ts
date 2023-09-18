@@ -1,17 +1,14 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
+import { NextApiRequest, NextApiResponse } from "next";
+import { Product } from "@prisma/client";
 
 export async function DELETE(
   request: Request,
   { params }: { params: { productId: string } }
 ) {
   try {
-    const { userId } = auth();
-
-    if (!userId) new NextResponse("Unauthorized", { status: 401 });
-
     const product = await prismadb.product.delete({
       where: {
         id: params.productId,
@@ -28,7 +25,6 @@ export async function PATCH(
   { params }: { params: { productId: string } }
 ) {
   try {
-    const { userId } = auth();
     const body = await request.json();
     const { name, price, image, categoryId } = body;
     console.log(body);

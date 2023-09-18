@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
@@ -8,9 +7,6 @@ export async function DELETE(
   { params }: { params: { subcategoryId: string } }
 ) {
   try {
-    const { userId } = auth();
-    if (!userId) new NextResponse("Unauthorized", { status: 401 });
-
     const subcategory = await prismadb.subcategory.delete({
       where: {
         id: params.subcategoryId,
@@ -27,11 +23,8 @@ export async function PATCH(
   { params }: { params: { subcategoryId: string } }
 ) {
   try {
-    const { userId } = auth();
     const body = await request.json();
     const { name } = body;
-
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
     if (!name) new NextResponse("Subcategory name required!", { status: 400 });
 
     const subcategory = await prismadb.subcategory.update({

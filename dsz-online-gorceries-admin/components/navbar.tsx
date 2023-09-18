@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 import NavLink from "@/components/nav-link";
@@ -46,9 +45,7 @@ const Navbar = () => {
           ))}
         </div>
         <div className="flex items-center h-full">
-          <SignOutButton>
-            <Button>Logout</Button>
-          </SignOutButton>
+          <Button>Logout</Button>
         </div>
       </div>
     </nav>

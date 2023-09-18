@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { SignOutButton, UserButton, useAuth } from "@clerk/nextjs";
 import { Menu, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -14,7 +13,6 @@ import { Label } from "./ui/label";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
-  const { userId } = useAuth();
   const pathName = usePathname();
   const navLinks = [
     {
@@ -153,6 +151,7 @@ const Navbar = () => {
       <div className="flex gap-x-8 h-full">
         {navItems.map((item) => (
           <div
+            key={item.label}
             className={cn(
               "border-b-4 hover:border-orange-500 self-end",
               item.active ? "border-orange-500" : "border-transparent"
