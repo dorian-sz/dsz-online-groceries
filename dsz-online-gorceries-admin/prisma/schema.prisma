@@ -21,6 +21,12 @@ model Subcategory{
   products Product[]
 }
 
+model Offer{
+  id String @id @default(uuid())
+  name String
+  products Product[]
+}
+
 model Product{
   id String @id @default(uuid())
   name String
@@ -30,7 +36,10 @@ model Product{
   category Category @relation(fields: [categoryId], references: [id])
   subcategoryId String
   subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
+  offerId String
+  offer Offer @relation(fields: [offerId], references: [id])
 
   @@index([categoryId])
   @@index([subcategoryId])
+  @@index([offerId])
 }
