@@ -27,7 +27,6 @@ export async function PATCH(
   try {
     const body = await request.json();
     const { name, price, image, categoryId } = body;
-    console.log(body);
     if (!name || !price || !image || categoryId)
       new NextResponse("All product data is required!", { status: 400 });
     const product = await prismadb.product.update({
