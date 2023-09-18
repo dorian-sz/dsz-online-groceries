@@ -9,7 +9,7 @@ const ProductsPage = async () => {
   });
   const data = products.map((product) => ({
     ...product,
-    price: product.price.toString(),
+    price: parseFloat(product.price.toFixed(2)).toString(),
     category: product.category.name,
   }));
 
