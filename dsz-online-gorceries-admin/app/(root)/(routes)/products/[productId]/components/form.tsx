@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Category, Product, Subcategory } from "@prisma/client";
+import { Category, Offer, Product, Subcategory } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import FormSelect from "./form-select";
 
@@ -26,6 +26,7 @@ const formSchema = z.object({
   price: z.coerce.number().refine((value) => parseFloat(value.toFixed(2))),
   categoryId: z.string(),
   subcategoryId: z.string(),
+  offerId: z.string(),
   image: z.string().min(1),
 });
 
@@ -33,12 +34,14 @@ interface ProductFormProps {
   initialData: Product | null;
   categories: Category[];
   subcategories: Subcategory[];
+  offers: Offer[];
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
   subcategories,
+  offers,
 }) => {
   const router = useRouter();
   const title = initialData === null ? "Add Product" : "Update Product";
@@ -53,7 +56,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
           name: "",
           price: 0.0,
           categoryId: "Select a category",
-          subcategoryId: "Select a category",
+          subcategoryId: "Select a subcategory",
+          offerId: "Select offer",
           image: "",
         },
   });
@@ -129,6 +133,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   field={field}
                   selectArr={subcategories}
                   label="Select Subcategory"
+                />
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="offerId"
+              render={({ field }) => (
+                <FormSelect
+                  field={field}
+                  selectArr={offers}
+                  label="Select Offer"
                 />
               )}
             />

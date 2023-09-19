@@ -13,6 +13,7 @@ const ProductPage = async ({ params }: { params: { productId: string } }) => {
 
   const categories = await prismadb.category.findMany();
   const subcategories = await prismadb.subcategory.findMany();
+  const offers = await prismadb.offer.findMany();
 
   return (
     <div className="flex justify-center flex-col gap-y-8">
@@ -20,6 +21,7 @@ const ProductPage = async ({ params }: { params: { productId: string } }) => {
         initialData={product}
         categories={categories}
         subcategories={subcategories}
+        offers={offers}
       />
     </div>
   );
