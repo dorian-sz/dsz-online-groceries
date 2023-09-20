@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ControllerRenderProps } from "react-hook-form";
 
 interface FormSelectProps {
   field: any;
@@ -19,11 +20,12 @@ interface FormSelectProps {
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({ field, selectArr, label }) => {
+  console.log(field);
   return (
     <>
       <FormItem>
         <FormLabel className="font-bold text-md">{label}</FormLabel>
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <Select onValueChange={(id) => field.value.push(id)}>
           <FormControl>
             <SelectTrigger className="p-2 border bg-white rounded-sm hover:bg-accent hover:text-accent-foreground">
               <SelectValue placeholder="Select a category" />
