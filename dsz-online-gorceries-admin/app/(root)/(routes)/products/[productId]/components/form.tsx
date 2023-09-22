@@ -17,30 +17,27 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Category, Offer, Product, Subcategory } from "@prisma/client";
+import { Category, Offer, Product } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import FormSelect from "./form-select";
 
 const formSchema = z.object({
   name: z.string().min(1),
   price: z.coerce.number().refine((value) => parseFloat(value.toFixed(2))),
-  categoryId: z.string(),
-  subcategoryId: z.string(),
-  offerId: z.string(),
+  categories: z.object({ id: z.string() }).array(),
+  offers: z.object({ id: z.string() }).array(),
   image: z.string().min(1),
 });
 
 interface ProductFormProps {
   initialData: Product | null;
   categories: Category[];
-  subcategories: Subcategory[];
   offers: Offer[];
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
-  subcategories,
   offers,
 }) => {
   const router = useRouter();
@@ -55,9 +52,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
       : {
           name: "",
           price: 0.0,
-          categoryId: "Select a category",
-          subcategoryId: "Select a subcategory",
-          offerId: "Select offer",
+          categories: [],
+          offers: [],
           image: "",
         },
   });
@@ -116,34 +112,26 @@ const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="categoryId"
+              name="categories"
               render={({ field }) => (
                 <FormSelect
                   field={field}
                   selectArr={categories}
                   label="Select Category"
+                  searchLabel="Search category..."
                 />
               )}
             />
+
             <FormField
               control={form.control}
-              name="subcategoryId"
-              render={({ field }) => (
-                <FormSelect
-                  field={field}
-                  selectArr={subcategories}
-                  label="Select Subcategory"
-                />
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="offerId"
+              name="offers"
               render={({ field }) => (
                 <FormSelect
                   field={field}
                   selectArr={offers}
                   label="Select Offer"
+                  searchLabel="Search offer..."
                 />
               )}
             />
