@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 import { Category, Offer, Product } from "@prisma/client";
 import { connect } from "http2";
+import axios from "axios";
 
 export async function GET() {
   try {
@@ -17,15 +18,8 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, price, image } = body;
-    const categories: Category[] = body.categories.map(
-      (categoryId: string) => ({
-        id: categoryId,
-      })
-    );
-    const offers: Offer[] = body.offers.map((offerId: string) => ({
-      id: offerId,
-    }));
+    const { name, price, image, categories, offers } = body;
+
     if (!name || !price || !image || !categories || !offers)
       new NextResponse("All product data is required!", { status: 400 });
     const product = await prismadb.product.create({
