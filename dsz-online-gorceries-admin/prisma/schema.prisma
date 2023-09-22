@@ -12,18 +12,16 @@ datasource db {
 model Category{
   id String @id @default(uuid())
   name String
-  products Product[]
-}
-
-model Subcategory{
-  id String @id @default(uuid())
-  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   products Product[]
 }
 
 model Offer{
   id String @id @default(uuid())
   name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   products Product[]
 }
 
@@ -32,14 +30,8 @@ model Product{
   name String
   price Decimal
   image String
-  categoryId String
-  category Category @relation(fields: [categoryId], references: [id])
-  subcategoryId String
-  subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
-  offerId String
-  offer Offer @relation(fields: [offerId], references: [id])
-
-  @@index([categoryId])
-  @@index([subcategoryId])
-  @@index([offerId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  categories Category[]
+  offers Offer[]
 }

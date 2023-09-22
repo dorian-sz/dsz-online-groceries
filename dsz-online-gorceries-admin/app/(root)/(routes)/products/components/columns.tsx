@@ -2,12 +2,13 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import Actions from "./actions";
+import { Category } from "@prisma/client";
 
 export type ProductColumn = {
   id: string;
   name: string;
   price: string;
-  category: string;
+  categories: string[];
 };
 
 export const Columns: ColumnDef<ProductColumn>[] = [
@@ -20,8 +21,8 @@ export const Columns: ColumnDef<ProductColumn>[] = [
     header: "Price",
   },
   {
-    accessorKey: "category",
-    header: "Category",
+    accessorKey: "categories",
+    header: "Categories",
   },
   {
     id: "actions",

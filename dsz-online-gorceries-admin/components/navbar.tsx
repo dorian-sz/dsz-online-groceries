@@ -18,11 +18,6 @@ const Navbar = () => {
         href: "/categories",
       },
       {
-        label: "Subcategories",
-        active: pathName === "/subcategories",
-        href: "/subcategories",
-      },
-      {
         label: "Offers",
         active: pathName === "/offers",
         href: "/offers",
