@@ -5,12 +5,12 @@ import prismadb from "@/lib/prismadb";
 
 const ProductsPage = async () => {
   const products = await prismadb.product.findMany({
-    include: { category: true },
+    include: { categories: true, offers: true },
   });
   const data = products.map((product) => ({
     ...product,
     price: parseFloat(product.price.toFixed(2)).toString(),
-    category: product.category.name,
+    categories: product.categories.map((category) => category.name),
   }));
 
   return (
