@@ -1,14 +1,22 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { Category, Offer, Product } from "@prisma/client";
-import { connect } from "http2";
 import axios from "axios";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const products: Product[] = await prismadb.product.findMany();
-
+    const query = request.nextUrl.searchParams;
+    const offerQuery: string = query.get("offer") ?? "";
+    const products: Product[] = await prismadb.product.findMany({
+      where: {
+        offers: {
+          some: {
+            id: offerQuery,
+          },
+        },
+      },
+    });
     return NextResponse.json(products);
   } catch (error) {
     return new NextResponse(`Error: ${error}`, { status: 500 });
