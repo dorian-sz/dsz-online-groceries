@@ -1,18 +1,24 @@
 export interface Category {
   id: string;
   name: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface Subcategory {
+export interface Offer {
   id: string;
   name: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Product {
   id: string;
   name: string;
-  price: string;
-  category: Category;
-  subcategory: Subcategory;
+  price: Number;
   image: string;
+  createdAt: Date;
+  updatedAt: Date;
+  categories: Category[];
+  offers: Offer[];
 }

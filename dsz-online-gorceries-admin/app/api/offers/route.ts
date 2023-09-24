@@ -24,7 +24,9 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const offers: Offer[] = await prismadb.offer.findMany();
+    const offers: Offer[] = await prismadb.offer.findMany({
+      orderBy: { name: "asc" },
+    });
 
     return NextResponse.json(offers);
   } catch (error) {

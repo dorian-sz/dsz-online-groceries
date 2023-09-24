@@ -6,7 +6,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-full relative bg-zinc-100">
+    <div className=" h-screen overflow-auto relative bg-zinc-100">
       <nav className="flex flex-col fixed w-full h-24 md:h-56 bg-white">
         <Navbar />
       </nav>

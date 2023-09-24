@@ -1,13 +1,15 @@
 import OffersBoard from "@/components/offersBoard";
+import { getOffers } from "@/data/offers";
 import { getProducts } from "@/data/products";
+import { Offer, Product } from "@/data/types";
 
 const OffersPage = async () => {
-  const productsData = getProducts({ price: "2" });
-  const [products] = await Promise.all([productsData]);
+  const products: Product[] = await getProducts({ price: "2" });
+  const offers: Offer[] = await getOffers();
   console.log(products.length);
   return (
     <div>
-      <OffersBoard />
+      <OffersBoard offers={offers} />
       {products.map((product) => (
         <p>{product.name}</p>
       ))}
