@@ -17,7 +17,7 @@ const OffersBoard: React.FC<OffersBoardProps> = ({ offers }) => {
       <p className="text-4xl font-extrabold">Offers</p>
       <div className="flex gap-4 flex-wrap justify-center items-center mx-auto w-3/4">
         {offers.map((offer) => (
-          <OfferCard name={offer.name} />
+          <OfferCard {...offer} />
         ))}
       </div>
     </div>
