@@ -1,12 +1,10 @@
 import { HiChevronLeft } from "react-icons/hi";
-
 import OffersBoard from "@/components/offersBoard";
 import { getOffers } from "@/data/offers";
 import { getProducts } from "@/data/products";
 import { Offer, Product } from "@/data/types";
 import Link from "next/link";
-
-import FilteredOffers from "@/components/filteredOffers";
+import FilteredOffersContainer from "@/components/filteredOffers";
 
 interface FilteredOffersPageProps {
   params: {
@@ -31,7 +29,7 @@ const FilteredOffersPage: React.FC<FilteredOffersPageProps> = async ({
         </Link>
       </div>
       <OffersBoard offers={offers} />
-      <FilteredOffers products={products} />
+      <FilteredOffersContainer products={products} />
     </div>
   );
 };
