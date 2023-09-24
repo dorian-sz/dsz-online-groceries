@@ -1,23 +1,22 @@
 "use client";
 
 import { Offer } from "@/data/types";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 import OfferCard from "@/components/ui/offerCard";
+import { useParams } from "next/navigation";
 
 interface OffersBoardProps {
   offers: Offer[];
 }
 
 const OffersBoard: React.FC<OffersBoardProps> = ({ offers }) => {
-  const pathname = usePathname();
+  const params = useParams();
 
   return (
-    <div className="flex flex-col w-full items-center p-6 justify-center gap-y-8 bg-white">
+    <div className="flex flex-col items-center py-4 w-11/12 mx-auto justify-center gap-y-8 bg-white md:p-6 md:w-full">
       <p className="text-4xl font-extrabold">Offers</p>
-      <div className="flex gap-4 flex-wrap justify-center items-center mx-auto w-3/4">
+      <div className="flex gap-4 w-full overflow-x-auto items-center md:justify-center md:mx-auto  md:flex-wrap md:w-3/4">
         {offers.map((offer) => (
-          <OfferCard {...offer} />
+          <OfferCard {...offer} active={offer.id === params.filter} />
         ))}
       </div>
     </div>
