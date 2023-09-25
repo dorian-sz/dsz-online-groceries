@@ -21,12 +21,14 @@ const FilteredOffersPage: React.FC<FilteredOffersPageProps> = async ({
   return (
     <div className="flex flex-col gap-y-4">
       <div className="px-2">
-        <Link href={"/offers"}>
-          <p className="flex items-center font-bold underline hover:no-underline">
-            <HiChevronLeft />
-            Back to offers home page
-          </p>
-        </Link>
+        <div>
+          <Link href={"/offers"}>
+            <p className="flex items-center font-bold underline hover:no-underline">
+              <HiChevronLeft />
+              Back to offers home page
+            </p>
+          </Link>
+        </div>
       </div>
       <OffersBoard offers={offers} />
       <FilteredOffersContainer products={products} />
