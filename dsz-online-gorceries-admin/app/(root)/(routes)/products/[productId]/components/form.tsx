@@ -23,7 +23,7 @@ import FormSelect from "./form-select";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  price: z.coerce.number().refine((value) => parseFloat(value.toFixed(2))),
+  price: z.coerce.number().refine((value) => value.toFixed(2)),
   categories: z.object({ id: z.string() }).array(),
   offers: z.object({ id: z.string() }).array(),
   image: z.string().min(1),
@@ -59,7 +59,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     initialData
       ? await axios
           .patch(`/api/products/${initialData?.id}`, values)
