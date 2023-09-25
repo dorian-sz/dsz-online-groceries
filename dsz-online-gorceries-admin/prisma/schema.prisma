@@ -28,8 +28,13 @@ model Offer{
 model Product{
   id String @id @default(uuid())
   name String
-  price Decimal
+  price Float
   image String
+  size Float?
+  amount Int?
+  description String
+  origin String
+  storage String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   categories Category[]
