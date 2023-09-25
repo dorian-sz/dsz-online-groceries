@@ -9,9 +9,9 @@ const FilteredOffersContainer: React.FC<FilteredOffersContainerProps> = ({
   products,
 }) => {
   return (
-    <div className="flex gap-x-6">
+    <div className="flex gap-6 flex-wrap justify-center">
       {products.map((product) => (
-        <ProductCard product={product} />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );
