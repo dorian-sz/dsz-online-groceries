@@ -17,7 +17,7 @@ const ProductBoard: React.FC<ProudctBoardProps> = ({ product }) => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row gap-x-8 p-2 md:p-8 justify-center items-center md:items-start w-full bg-white">
+    <div className="flex flex-col md:flex-row gap-8 p-2 md:p-8 justify-center items-center md:items-start w-full bg-white">
       <div className="flex flex-col gap-y-4">
         <CldImage
           width={300}
@@ -40,11 +40,11 @@ const ProductBoard: React.FC<ProudctBoardProps> = ({ product }) => {
         <div>
           <p className="text-sm">{description[0]}</p>
         </div>
-        <div className="flex flex-row md:flex-col gap-4">
-          <div className="flex flex-col ">
+        <div className="flex flex-row w-full justify-between md:flex-col gap-4">
+          <div className="flex flex-col">
             {product.nectarPrice && (
               <p className="text-sm">
-                <span className="text-xl font-extrabold text-purple-800">
+                <span className="text-lg md:text-xl font-extrabold text-purple-800">
                   £{parseFloat(product.nectarPrice.toString()).toFixed(2)}
                 </span>
                 &#160; with Nectar
@@ -52,14 +52,14 @@ const ProductBoard: React.FC<ProudctBoardProps> = ({ product }) => {
             )}
 
             <p className="text-sm">
-              <span className="text-3xl font-extrabold">
+              <span className="text-2xl md:text-3xl font-extrabold">
                 £{parseFloat(product.price.toString()).toFixed(2)}
               </span>
               &#160; £{Number(product.price) / Number(product.size)} / ltr
             </p>
           </div>
-          <div className="flex items-center justify-center md:justify-start">
-            <Button className="px-16 py-2 font-bold text-lg">Add</Button>
+          <div className="flex flex-col justify-center items-end md:items-start">
+            <Button className="w-36 py-2 font-bold text-lg">Add</Button>
           </div>
         </div>
       </div>
