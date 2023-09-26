@@ -26,15 +26,42 @@ export async function GET(request: NextRequest) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, price, image, categories, offers } = body;
+    const {
+      name,
+      price,
+      nectarPrice,
+      image,
+      size,
+      amount,
+      description,
+      origin,
+      storage,
+      categories,
+      offers,
+    } = body;
 
-    if (!name || !price || !image || !categories || !offers)
+    if (
+      !name ||
+      !price ||
+      !nectarPrice ||
+      !image ||
+      !categories ||
+      !offers ||
+      !description ||
+      !origin
+    )
       new NextResponse("All product data is required!", { status: 400 });
     const product = await prismadb.product.create({
       data: {
         name,
         price,
+        nectarPrice,
         image,
+        size,
+        amount,
+        description,
+        origin,
+        storage,
         categories: { connect: categories },
         offers: { connect: offers },
       },

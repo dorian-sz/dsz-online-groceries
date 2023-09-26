@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 import { Category, Offer, Product } from "@prisma/client";
 
-
 export async function DELETE(
   request: Request,
   { params }: { params: { productId: string } }
@@ -26,9 +25,30 @@ export async function PATCH(
 ) {
   try {
     const body = await request.json();
-    const { name, price, image, categories, offers } = body;
+    const {
+      name,
+      price,
+      nectarPrice,
+      image,
+      size,
+      amount,
+      description,
+      origin,
+      storage,
+      categories,
+      offers,
+    } = body;
 
-    if (!name || !price || !image || !categories)
+    if (
+      !name ||
+      !price ||
+      !nectarPrice ||
+      !image ||
+      !categories ||
+      !offers ||
+      !description ||
+      !origin
+    )
       new NextResponse("All product data is required!", { status: 400 });
 
     const prevProduct = await prismadb.product.findUnique({
@@ -44,13 +64,18 @@ export async function PATCH(
           (newCategory: Category) => category.id === newCategory.id
         )
     );
-    console.log(removeOffers);
     const product = await prismadb.product.update({
       where: { id: params.productId },
       data: {
         name,
+        nectarPrice,
         price,
         image,
+        size,
+        amount,
+        description,
+        origin,
+        storage,
         categories: { connect: categories, disconnect: removeCategories },
         offers: {
           connect: offers,
@@ -59,6 +84,22 @@ export async function PATCH(
       },
     });
 
+    return NextResponse.json(product);
+  } catch (error) {
+    return new NextResponse(`Error: ${error}`, { status: 500 });
+  }
+}
+
+export async function GET(
+  request: Request,
+  { params }: { params: { productId: string } }
+) {
+  try {
+    const product: Product | null = await prismadb.product.findUnique({
+      where: {
+        id: params.productId,
+      },
+    });
     return NextResponse.json(product);
   } catch (error) {
     return new NextResponse(`Error: ${error}`, { status: 500 });
