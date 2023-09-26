@@ -15,8 +15,14 @@ export interface Offer {
 export interface Product {
   id: string;
   name: string;
+  nectarPrice: Number;
   price: Number;
   image: string;
+  size: Number;
+  amount: Number;
+  description: string;
+  origin: string;
+  storage: string;
   createdAt: Date;
   updatedAt: Date;
   categories: Category[];
