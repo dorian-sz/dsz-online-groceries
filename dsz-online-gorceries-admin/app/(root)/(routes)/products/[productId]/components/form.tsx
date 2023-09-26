@@ -24,9 +24,21 @@ import FormSelect from "./form-select";
 const formSchema = z.object({
   name: z.string().min(1),
   price: z.coerce.number().refine((value) => value.toFixed(2)),
+  nectarPrice: z.coerce
+    .number()
+    .refine((value) => value.toFixed(2))
+    .nullable(),
   categories: z.object({ id: z.string() }).array(),
   offers: z.object({ id: z.string() }).array(),
   image: z.string().min(1),
+  size: z.coerce
+    .number()
+    .refine((value) => value.toFixed(3))
+    .nullable(),
+  amount: z.number().nullable(),
+  description: z.string().min(1),
+  origin: z.string().min(1),
+  storage: z.string(),
 });
 
 interface ProductFormProps {
@@ -48,13 +60,24 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData
-      ? { ...initialData, price: Number(initialData.price) }
+      ? {
+          ...initialData,
+          price: Number(initialData.price),
+          nectarPrice: Number(initialData.nectarPrice),
+          size: Number(initialData.size),
+        }
       : {
           name: "",
           price: 0.0,
+          nectarPrice: null,
           categories: [],
           offers: [],
           image: "",
+          size: null,
+          amount: null,
+          description: "",
+          origin: "",
+          storage: "",
         },
   });
 
@@ -111,6 +134,26 @@ const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
+              name="nectarPrice"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Nectar price
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Nectar price"
+                      {...field}
+                      value={field.value !== null ? String(field.value) : ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="categories"
               render={({ field }) => (
                 <FormSelect
@@ -132,6 +175,89 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   label="Select Offer"
                   searchLabel="Search offer..."
                 />
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="size"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">Size</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Size"
+                      {...field}
+                      value={field.value !== null ? String(field.value) : ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Amount in packaging
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Amount"
+                      {...field}
+                      value={field.value !== null ? String(field.value) : ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Product description
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Product description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="origin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Product origin
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Product origin" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="storage"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Storage instructions
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Storage instructions" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
             />
             <FormField
