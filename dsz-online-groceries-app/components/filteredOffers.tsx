@@ -1,5 +1,5 @@
 import { Product } from "@/data/types";
-import ProductCard from "./ui/productCard";
+import ProductCard from "./productCard";
 
 interface FilteredOffersContainerProps {
   products: Product[];
