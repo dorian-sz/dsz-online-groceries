@@ -28,13 +28,14 @@ model Offer{
 model Product{
   id String @id @default(uuid())
   name String
-  price Float
+  price Decimal @db.Decimal(5,2)
+  nectarPrice Decimal? @db.Decimal(5,2)
   image String
-  size Float?
+  size Decimal? @db.Decimal(5,3)
   amount Int?
-  description String
+  description String @db.LongText()
   origin String
-  storage String?
+  storage String @db.LongText()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   categories Category[]
