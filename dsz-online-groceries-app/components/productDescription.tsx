@@ -2,8 +2,6 @@
 
 import { Product } from "@/data/types";
 import { useEffect, useState } from "react";
-import reactElementToJSXString from "react-element-to-jsx-string";
-import { Separator } from "@/components/ui/separator";
 import ProductInfo from "./productInfo";
 
 interface ProductDescriptionProps {
