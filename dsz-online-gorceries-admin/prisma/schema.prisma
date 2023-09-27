@@ -25,6 +25,12 @@ model Offer{
   products Product[]
 }
 
+model Unit{
+  id String @id @default(uuid())
+  name String
+  products Product[]
+}
+
 model Product{
   id String @id @default(uuid())
   name String
@@ -40,4 +46,8 @@ model Product{
   updatedAt DateTime @updatedAt
   categories Category[]
   offers Offer[]
+  unitId String
+  unit Unit @relation(fields: [unitId], references: [id])
+
+  @@index([unitId])
 }
