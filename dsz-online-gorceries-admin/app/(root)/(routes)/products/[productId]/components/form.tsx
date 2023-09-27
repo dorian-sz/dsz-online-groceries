@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Category, Offer, Product } from "@prisma/client";
+import { Category, Offer, Product, Unit } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import FormSelect from "./form-select";
+import SelectForm from "./form-single-select";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -30,6 +31,7 @@ const formSchema = z.object({
     .nullable(),
   categories: z.object({ id: z.string() }).array(),
   offers: z.object({ id: z.string() }).array(),
+  unitId: z.string(),
   image: z.string().min(1),
   size: z.coerce
     .number()
@@ -45,12 +47,14 @@ interface ProductFormProps {
   initialData: Product | null;
   categories: Category[];
   offers: Offer[];
+  units: Unit[];
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
   offers,
+  units,
 }) => {
   const router = useRouter();
   const title = initialData === null ? "Add Product" : "Update Product";
@@ -193,6 +197,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   </FormControl>
                   <FormMessage />
                 </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="unitId"
+              render={({ field }) => (
+                <SelectForm
+                  field={field}
+                  selectArr={units}
+                  label="Select Unit"
+                />
               )}
             />
             <FormField
