@@ -4,6 +4,7 @@ import { Product } from "@/data/types";
 import { CldImage } from "next-cloudinary";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
+import { displayPrice, unitPrice } from "@/app/helpers/priceFomat";
 
 interface ProudctBoardProps {
   product: Product;
@@ -11,9 +12,10 @@ interface ProudctBoardProps {
 
 const ProductBoard: React.FC<ProudctBoardProps> = ({ product }) => {
   const [description, setDescription] = useState<string[]>([]);
-
+  const [uPrice, setUPrice] = useState<number>(0);
   useEffect(() => {
     setDescription(product.description.split("  "));
+    setUPrice(unitPrice(product.price, product.size, product.unit.factor));
   }, []);
 
   return (
@@ -45,7 +47,7 @@ const ProductBoard: React.FC<ProudctBoardProps> = ({ product }) => {
             {product.nectarPrice && (
               <p className="text-sm">
                 <span className="text-lg md:text-xl font-extrabold text-purple-800">
-                  £{parseFloat(product.nectarPrice.toString()).toFixed(2)}
+                  {displayPrice(parseFloat(product.nectarPrice.toString()))}
                 </span>
                 &#160; with Nectar
               </p>
@@ -53,9 +55,10 @@ const ProductBoard: React.FC<ProudctBoardProps> = ({ product }) => {
 
             <p className="text-sm">
               <span className="text-2xl md:text-3xl font-extrabold">
-                £{parseFloat(product.price.toString()).toFixed(2)}
-              </span>
-              &#160; £{Number(product.price) / Number(product.size)} / ltr
+                {displayPrice(parseFloat(product.price.toString()))}
+              </span>{" "}
+              {displayPrice(parseFloat(uPrice.toString()))} /{" "}
+              {product.unit ? product.unit.name : "ea"}
             </p>
           </div>
           <div className="flex flex-col justify-center items-end md:items-start">
