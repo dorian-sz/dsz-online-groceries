@@ -5,6 +5,7 @@ import { CldImage } from "next-cloudinary";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { displayPrice, unitPrice } from "@/app/helpers/priceFomat";
+import Nectar from "./nectar";
 
 interface ProductCardProps {
   product: Product;
@@ -18,8 +19,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="flex flex-row md:flex-col gap-y-8 p-4 w-full md:w-[18.7%] md:h-full justify-end items-center bg-white">
-      <div className="hidden md:flex">
+    <div className="flex flex-row relative z-0 md:flex-col gap-y-8 p-4 md:pt-20 w-full md:w-[18.7%] md:h-full justify-end items-center bg-white">
+      <div className="hidden md:flex justify-center">
         <CldImage
           className="rounded-sm"
           width={140}
@@ -38,6 +39,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
       </div>
       <div className="flex flex-col w-full gap-y-4">
+        {product.nectarPrice && (
+          <div className="md:absolute top-5 left-0 z-0">
+            <Nectar />
+          </div>
+        )}
         <div>
           <Link href={`/product/${product.id}`}>
             <p className="font-semibold text-sm transition-colors duration-200 hover:underline hover:text-orange-600">
@@ -46,12 +52,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </Link>
         </div>
         <div className="flex flex-col gap-y-1">
-          <p className="text-sm">
-            <span className="text-purple-700 font-extrabold text-base">
-              {displayPrice(parseFloat(product.nectarPrice.toString()))}
-            </span>{" "}
-            with Nectar
-          </p>
+          {product.nectarPrice && (
+            <p className="text-sm">
+              <span className="text-purple-600 font-extrabold text-base">
+                {displayPrice(parseFloat(product.nectarPrice.toString()))}
+              </span>{" "}
+              with Nectar
+            </p>
+          )}
+
           <p className="text-sm">
             <span className="font-extrabold text-xl">
               {displayPrice(parseFloat(product.price.toString()))}

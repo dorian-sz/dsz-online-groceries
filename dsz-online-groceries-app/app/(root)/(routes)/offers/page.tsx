@@ -6,7 +6,7 @@ import { Offer, Product } from "@/data/types";
 const OffersPage = async () => {
   const products: Product[] = await getProducts({ price: "2" });
   const offers: Offer[] = await getOffers();
-  console.log(products.length);
+
   return (
     <div>
       <OffersBoard offers={offers} />
