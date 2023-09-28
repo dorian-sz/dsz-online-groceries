@@ -91,8 +91,8 @@ const Navbar = () => {
     [pathName]
   );
   return (
-    <div className="flex flex-col mx-auto h-full w-full md:pt-2 md:w-3/4 md:gap-y-4">
-      <div className="hidden gap-x-6 items-center md:w-full md:flex md: ">
+    <div className="flex flex-col mx-auto h-full w-full p-4 md:pt-2 md:p-0 md:w-3/4 gap-y-4">
+      <div className="hidden gap-x-6 items-center md:w-full md:flex">
         <div className="flex w-full justify-between">
           <div className="space-x-4 text-xs font-semibold">
             {navLinks.map((link) => (
@@ -119,14 +119,22 @@ const Navbar = () => {
           <Cart />
         </div>
       </div>
-      <div className="flex items-center">
-        <Logo width={150} height={100} />
+      <div className="flex gap-x-4 items-center">
+        <div className="hidden md:flex">
+          <Logo width={150} height={100} />
+        </div>
+        <div className="flex md:hidden">
+          <Menu />
+        </div>
+        <div className="flex md:hidden">
+          <Logo width={100} height={100} />
+        </div>
       </div>
-      <div className="hidden w-full md:flex md:relative items-center">
+      <div className="flex w-full relative items-center">
         <Input
           id="search-bar"
           name="search-bar"
-          className="border placeholder:text-gray-400 py-6"
+          className="border placeholder:text-gray-400 py-4 md:py-6"
           placeholder="Search products"
         />
         <Label
@@ -135,7 +143,7 @@ const Navbar = () => {
         >
           <Link
             href={"/search-a-list-of-items"}
-            className="text-gray-500 font-light underline-offset-2 hover:underline"
+            className="hidden md:flex text-gray-500 font-light underline-offset-2 hover:underline"
           >
             Search a list of items
           </Link>
@@ -148,12 +156,12 @@ const Navbar = () => {
           </Button>
         </Label>
       </div>
-      <div className="flex gap-x-8 h-full">
+      <div className="hidden md:flex gap-x-8 h-full">
         {navItems.map((item) => (
           <div
             key={item.label}
             className={cn(
-              "border-b-4 hover:border-orange-500 self-end",
+              "border-b-4 hover:border-orange-500 self-end py-2",
               item.active ? "border-orange-500" : "border-transparent"
             )}
           >
