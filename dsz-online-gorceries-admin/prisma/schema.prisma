@@ -28,6 +28,7 @@ model Offer{
 model Unit{
   id String @id @default(uuid())
   name String
+  factor Int
   products Product[]
 }
 
@@ -37,7 +38,7 @@ model Product{
   price Decimal @db.Decimal(5,2)
   nectarPrice Decimal? @db.Decimal(5,2)
   image String
-  size Decimal? @db.Decimal(5,3)
+  size Decimal? @db.Decimal(7,3)
   amount Int?
   description String @db.LongText()
   origin String
