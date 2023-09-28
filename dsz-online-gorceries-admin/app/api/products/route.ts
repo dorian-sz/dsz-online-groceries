@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
           },
         },
       },
+      include: { unit: true },
     });
     return NextResponse.json(products);
   } catch (error) {
@@ -53,6 +54,7 @@ export async function POST(request: Request) {
       !unitId
     )
       new NextResponse("All product data is required!", { status: 400 });
+    console.log(body);
     const product = await prismadb.product.create({
       data: {
         name,
