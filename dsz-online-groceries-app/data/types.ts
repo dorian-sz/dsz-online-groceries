@@ -12,6 +12,12 @@ export interface Offer {
   updatedAt: Date;
 }
 
+export interface Unit {
+  id: string;
+  name: string;
+  factor: Number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -27,4 +33,5 @@ export interface Product {
   updatedAt: Date;
   categories: Category[];
   offers: Offer[];
+  unit: Unit;
 }
