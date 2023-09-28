@@ -102,6 +102,7 @@ export async function GET(
       where: {
         id: params.productId,
       },
+      include: { unit: true },
     });
     return NextResponse.json(product);
   } catch (error) {
