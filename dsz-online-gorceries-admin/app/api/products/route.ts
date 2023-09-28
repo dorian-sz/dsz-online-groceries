@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
           },
         },
       },
+      include: { unit: true },
     });
     return NextResponse.json(products);
   } catch (error) {
@@ -38,6 +39,7 @@ export async function POST(request: Request) {
       storage,
       categories,
       offers,
+      unitId,
     } = body;
 
     if (
@@ -48,9 +50,11 @@ export async function POST(request: Request) {
       !categories ||
       !offers ||
       !description ||
-      !origin
+      !origin ||
+      !unitId
     )
       new NextResponse("All product data is required!", { status: 400 });
+    console.log(body);
     const product = await prismadb.product.create({
       data: {
         name,
@@ -64,6 +68,7 @@ export async function POST(request: Request) {
         storage,
         categories: { connect: categories },
         offers: { connect: offers },
+        unitId,
       },
     });
     return NextResponse.json(product);

@@ -37,6 +37,7 @@ export async function PATCH(
       storage,
       categories,
       offers,
+      unitId,
     } = body;
 
     if (
@@ -47,7 +48,8 @@ export async function PATCH(
       !categories ||
       !offers ||
       !description ||
-      !origin
+      !origin ||
+      !unitId
     )
       new NextResponse("All product data is required!", { status: 400 });
 
@@ -81,6 +83,7 @@ export async function PATCH(
           connect: offers,
           disconnect: removeOffers,
         },
+        unitId,
       },
     });
 
