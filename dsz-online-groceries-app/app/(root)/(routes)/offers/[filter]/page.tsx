@@ -19,7 +19,7 @@ const FilteredOffersPage: React.FC<FilteredOffersPageProps> = async ({
 
   const products: Product[] = await getProducts({ offer: params.filter });
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col h-full gap-y-4">
       <div className="px-2">
         <div>
           <Link href={"/offers"}>
