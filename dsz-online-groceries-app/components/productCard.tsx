@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="flex flex-row relative z-0 md:flex-col gap-y-8 p-4 md:pt-20 w-full md:w-[18.7%] md:h-full justify-end items-center bg-white">
+    <div className="flex flex-row relative z-0 md:flex-col gap-y-8 p-4 md:pt-20 w-full md:w-[18.7%] md:min-h-full justify-between items-center bg-white">
       <div className="hidden md:flex justify-center">
         <CldImage
           className="rounded-sm"
@@ -38,13 +38,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={product.image}
         />
       </div>
-      <div className="flex flex-col w-full gap-y-4">
+      <div className="flex flex-col w-full h-full justify-between gap-y-4">
         {product.nectarPrice && (
           <div className="md:absolute top-5 left-0 z-0">
             <Nectar />
           </div>
         )}
-        <div>
+        <div className="h-full">
           <Link href={`/product/${product.id}`}>
             <p className="font-semibold text-sm transition-colors duration-200 hover:underline hover:text-orange-600">
               {truncate(product.name, strMaxLength)}
