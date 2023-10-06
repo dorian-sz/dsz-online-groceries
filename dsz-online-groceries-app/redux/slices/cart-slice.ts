@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { Product } from "@/data/types";
 
 const initialState = {
   loading: true,
-  cartItems: [] as { product: Product; quantity: Number }[],
+  cartItems: [] as { product: Product; quantity: number }[],
   totalPrice: 0,
 };
 
@@ -13,17 +13,14 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const exists = state.cartItems.find(
-        (cartItem) => cartItem.product.id === item.id
+      const existingItem = state.cartItems.find(
+        (cartItem) => cartItem.product.id === item.product.id
       );
-      if (exists) {
-        state.cartItems = state.cartItems.map((cartItem) =>
-          cartItem.product.id === exists.product.id ? item : cartItem
-        );
+      if (existingItem) {
+        existingItem.quantity = existingItem.quantity + 1;
       } else {
         state.cartItems = [...state.cartItems, item];
       }
-      item.quantity++;
       state.totalPrice = parseFloat(
         state.cartItems
           .reduce(
