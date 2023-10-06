@@ -7,13 +7,12 @@ const initialState = {
   totalPrice: 0,
 };
 
-export const cartSlice = createSlice({
+const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const product: Product = item.product;
       const exists = state.cartItems.find(
         (cartItem) => cartItem.product.id === item.id
       );
@@ -35,7 +34,20 @@ export const cartSlice = createSlice({
           .toFixed(2)
       );
     },
-    removeFromCart: (state, action) => {},
+    removeFromCart: (state, action) => {
+      state.cartItems = state.cartItems.filter(
+        (cartItem) => cartItem.product.id !== action.payload
+      );
+      state.totalPrice = parseFloat(
+        state.cartItems
+          .reduce(
+            (acc, cartItem) =>
+              acc + Number(cartItem.product.price) * Number(cartItem.quantity),
+            0
+          )
+          .toFixed(2)
+      );
+    },
   },
 });
 
