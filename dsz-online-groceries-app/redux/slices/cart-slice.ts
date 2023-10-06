@@ -48,8 +48,11 @@ const cartSlice = createSlice({
           .toFixed(2)
       );
     },
+    hideLoading: (state) => {
+      state.loading = false;
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, hideLoading } = cartSlice.actions;
 export default cartSlice.reducer;
