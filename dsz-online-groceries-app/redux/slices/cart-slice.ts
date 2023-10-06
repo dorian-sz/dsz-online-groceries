@@ -11,7 +11,20 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {},
+    addToCart: (state, action) => {
+      const item: Product = action.payload;
+      const exists = state.cartItems.find((product) => product.id === item.id);
+      if (exists) {
+        state.cartItems = state.cartItems.map((product) =>
+          product.id === exists.id ? item : product
+        );
+      } else {
+        state.cartItems = [...state.cartItems, item];
+      }
+      state.totalPrice = parseFloat(
+        (Number(state.totalPrice) + Number(item.price)).toFixed(2)
+      );
+    },
     removeFromCart: (state, action) => {},
   },
 });
