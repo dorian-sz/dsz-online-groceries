@@ -2,10 +2,14 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import CartHover from "./cartHover";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [open, setOpen] = useState(false);
+  const { loading, cartItems, totalPrice } = useSelector(
+    (state: any) => state.cart
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -23,7 +27,9 @@ const Cart = () => {
         onMouseLeave={() => setOpen(false)}
       >
         <ShoppingCart />
-        <span className="font-bold text-sm">£0.00</span>
+        <span className="font-bold text-sm">
+          £{loading ? "0.00" : totalPrice.toFixed(2)}
+        </span>
       </Button>
       {open && (
         <div
@@ -31,7 +37,7 @@ const Cart = () => {
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
         >
-          <CartHover />
+          <CartHover loading={loading} cartItems={cartItems} />
         </div>
       )}
     </div>
