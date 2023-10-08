@@ -1,9 +1,8 @@
 import { displayPrice, unitPrice } from "@/app/helpers/priceFomat";
 import { Product } from "@/data/types";
 import { CldImage } from "next-cloudinary";
-import { Button } from "./ui/button";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "@/redux/slices/cart-slice";
+import ProductCount from "./productCount";
 
 interface CartItemProps {
   product: Product;
@@ -36,25 +35,7 @@ const CartItem: React.FC<CartItemProps> = ({ product, quantity }) => {
         </p>
       </div>
 
-      <div className="flex flex-col h-full w-1/5">
-        <Button
-          className="h-full text-3xl p-0 font-semibold"
-          onClick={() => dispatch(addToCart({ product: product, quantity: 1 }))}
-        >
-          +
-        </Button>
-        <Button className="h-full" variant={"ghost"}>
-          {quantity}
-        </Button>
-        <Button
-          className="h-full p-0 text-3xl font-semibold"
-          onClick={() =>
-            dispatch(removeFromCart({ product: product, quantity: 1 }))
-          }
-        >
-          -
-        </Button>
-      </div>
+      <ProductCount product={product} quantity={quantity} />
     </div>
   );
 };
