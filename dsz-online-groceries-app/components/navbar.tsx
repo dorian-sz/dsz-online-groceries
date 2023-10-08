@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Menu, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -11,8 +11,16 @@ import Logo from "@/components/logo";
 import { Input } from "@/components/ui/input";
 import { Label } from "./ui/label";
 import { cn } from "@/lib/utils";
+import { useDispatch } from "react-redux";
+import { hideLoading } from "@/redux/slices/cart-slice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(hideLoading());
+  }, [dispatch]);
+
   const pathName = usePathname();
   const navLinks = [
     {

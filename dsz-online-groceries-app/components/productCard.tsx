@@ -1,17 +1,25 @@
 "use client";
 
-import { Product, Unit } from "@/data/types";
+import { Product } from "@/data/types";
 import { CldImage } from "next-cloudinary";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { displayPrice, unitPrice } from "@/app/helpers/priceFomat";
 import Nectar from "./nectar";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "@/redux/slices/cart-slice";
+import ProductCount from "./productCount";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state: any) => state.cart);
+  const cartItem = cartItems.find(
+    (prod: any) => prod.product.id === product.id
+  );
   const strMaxLength = 60;
   const uPrice = unitPrice(product.price, product.size, product.unit.factor);
   const truncate = (str: string, maxLength: number) => {
@@ -70,7 +78,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </p>
         </div>
         <div className="flex justify-end md:items-center md:justify-center w-full">
-          <Button className="w-4/6 ">Add</Button>
+          {cartItem ? (
+            <ProductCount
+              product={product}
+              quantity={cartItem.quantity}
+              className="flex-row-reverse w-10/12 justify-center"
+            />
+          ) : (
+            <Button
+              className="w-4/6 "
+              onClick={() =>
+                dispatch(addToCart({ product: product, quantity: 1 }))
+              }
+            >
+              Add
+            </Button>
+          )}
         </div>
       </div>
     </div>
