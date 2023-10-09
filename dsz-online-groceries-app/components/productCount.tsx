@@ -24,7 +24,10 @@ const ProductCount: React.FC<ProductCountProps> = ({
       >
         +
       </Button>
-      <Button className="h-full w-full" variant={"ghost"}>
+      <Button
+        className="h-full w-full font-bold hover:text-orange-600"
+        variant={"ghost"}
+      >
         {quantity}
       </Button>
       <Button
