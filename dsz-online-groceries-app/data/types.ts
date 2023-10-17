@@ -35,3 +35,11 @@ export interface Product {
   offers: Offer[];
   unit: Unit;
 }
+
+export interface User {
+  id: string;
+  username: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
